@@ -143,6 +143,16 @@ bool IthoFanComponent::on_receive(remote_base::RemoteReceiveData data) {
     uint32_t address = (frame[4] << 16) | (frame[5] << 8) | frame[6];
     ESP_LOGD(TAG, "Received: command: %" PRIx8 ", code: %" PRIu16 ", address %" PRIx32,
              command, code, address);
+    
+    // Als we een code ontvangen die nieuwer is dan onze eigen teller,
+    // werk dan onze eigen teller bij om weer synchroon te lopen.
+    if (code >= this->code_) {
+      ESP_LOGD(TAG, "Heard a newer rolling code (%" PRIu16 "). Updating internal counter to %" PRIu16 ".", code, code + 1);
+      this->set_code(code + 1);
+    }
+    // EINDE TOEGEVOEGDE CODE   
+
+
     if (command == SOMFY_SENSOR) {
       for (auto *sensor : this->sensors_) {
         sensor->update_windy(address, (code & 1) != 0);

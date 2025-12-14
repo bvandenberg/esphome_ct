@@ -6,6 +6,7 @@
 #define __ITHOCC1101_H__
 
 #include <stdio.h>
+#include <Arduino.h>
 #include "CC1101.h"
 #include "IthoPacket.h"
 

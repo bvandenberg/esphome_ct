@@ -1,7 +1,7 @@
 /*
  * Author: Klusjesman, modified bij supersjimmie for Arduino/ESP8266
  */
-
+#include <Arduino.h>
 #include "CC1101.h"
 
 // default constructor
